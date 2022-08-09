@@ -6,15 +6,19 @@ module.exports = function toReadable (number) {
 
     switch (number.toString().split('').length) {
         case 3:
-            string += number1[Math.trunc(number / 100)] + ' hundred ';
+            string += number1[Math.trunc(number / 100)] + ' hundred';
         case 2:
             if (number % 100 > 19) {
-                string += (number2[(Math.trunc(number / 10)) % 10 - 2]) + ' ';
+                if (string !== '') string += ' ';
+                string += (number2[(Math.trunc(number / 10)) % 10 - 2]);
             }
             else {
-                return string + number1[number % 100];
+                if (string !== '' && number % 100 !== 0) string += ' ';
+                if (number % 100 !== 0) return string + number1[number % 100];
             }
         case 1:
-            return string + number1[number % 10];
+            if ((number.toString().split('').length) === 1) return string + number1[number % 10];
+            if (number % 10 > 0 && (number.toString().split('').length) > 1) return string + ' ' + number1[number % 10];
     }
+    return string
 }
